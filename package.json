@@ -1,0 +1,13 @@
+{
+  "name": "cadena-ser-audio-relay",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CORS-enabled fixed-source audio relay for Cadena SER Argentina",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
