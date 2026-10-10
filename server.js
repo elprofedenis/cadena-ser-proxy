@@ -31,8 +31,7 @@ const server = http.createServer(async (req, res) => {
     upstream = await fetch(STREAM_URL, {
       method: req.method,
       headers: { "User-Agent": "CadenaSER-AudioRelay/1.0" },
-      redirect: "follow",
-      signal: AbortSignal.timeout(15000)
+      redirect: "follow"
     });
   } catch (err) {
     res.writeHead(502, { "Content-Type": "text/plain; charset=utf-8" });
@@ -57,9 +56,11 @@ const server = http.createServer(async (req, res) => {
 
   // Stream bytes continuously; do not buffer the whole broadcast.
   const reader = upstream.body.getReader();
-  req.on("close", () => {
+res.on("close", () => {
+  if (!res.writableEnded) {
     try { reader.cancel(); } catch (_) {}
-  });
+  }
+});
 
   try {
     while (true) {
